@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd ">
+    <dubbo:application name="hello-world" />
+    <!-- 注册地址 multicast局域网内使用  消费者需声明unicast=false，否则只会有一个消费者能收到消息-->
+    <!--<dubbo:registry address="multicast://224.5.6.7:1234"/>  -->
+    <dubbo:registry address="192.168.31.239:2181" protocol="zookeeper"/>
+    <!-- <dubbo:registry address="127.0.0.1:2181" protocol="zookeeper"/>  -->
+    <!--<dubbo:protocol name="dubbo" port="20880" /> 当时本地环境win10 可能20880端口被什么占用了，启动消费端的时候始终链接不上provider端-->
+    <dubbo:protocol name="dubbo" port="29015" />
+    <bean id="demoService" class="com.sheng.dubboserver.impl.HelloWorldImpl" />
+    <dubbo:service interface="com.sheng.dubboserver.HelloWorld" ref="demoService"/>
+</beans>
